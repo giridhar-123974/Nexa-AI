@@ -75,6 +75,7 @@ export interface RoadmapMilestone {
   deliverable: string;
   skills: string[];
   estimatedHours: number;
+  weeklyTarget?: string;
 }
 
 export interface CandidateProfile {
@@ -88,6 +89,7 @@ export interface CandidateProfile {
   baseAtsScore: number;
   baseKeywordMatch: number;
   atsParsedKeywords: number;
+  sampleResumeText: string;
   subScores: {
     quantifiedImpact: number;
     actionVerbs: number;
@@ -101,8 +103,16 @@ export interface CandidateProfile {
   roadmapMilestones: RoadmapMilestone[];
 }
 
+export type JobCategory =
+  | "frontend"
+  | "backend"
+  | "ai_engineer"
+  | "fullstack"
+  | "devops";
+
 export interface TargetJob {
   id: string;
+  roleKey: JobCategory;
   title: string;
   company: string;
   location: string;
@@ -110,24 +120,46 @@ export interface TargetJob {
   matchScore: number;
   requiredKeywords: string[];
   bonusKeywords: string[];
+  actionVerbKeywords: string[];
   description: string;
+}
+
+export type InterviewCategory =
+  | "frontend"
+  | "backend"
+  | "system_design"
+  | "javascript"
+  | "react"
+  | "nodejs"
+  | "typescript"
+  | "sql"
+  | "behavioral";
+
+export interface ExpectedKeyPoint {
+  id: string;
+  point: string;
+  keywords: string[];
+  weight: number; // e.g. 15-25
 }
 
 export interface InterviewQuestion {
   id: string;
-  category: "frontend" | "backend" | "system_design" | "behavioral" | "leadership" | "product";
+  category: InterviewCategory;
   categoryLabel: string;
   difficulty: "Medium" | "Hard" | "Staff Level";
   title: string;
   question: string;
   hints: string[];
+  expectedKeyPoints: ExpectedKeyPoint[];
+  sampleGoodAnswer: string;
   evaluationRubric: {
-    situation: string;
-    task: string;
-    action: string;
-    result: string;
+    situation?: string;
+    task?: string;
+    action?: string;
+    result?: string;
+    technicalDepth?: string;
+    clarity?: string;
   };
-  candidateSnippet: string;
   starBreakdown: {
     situation: number;
     task: number;
@@ -137,6 +169,43 @@ export interface InterviewQuestion {
   pacing: string;
   fillerWords: string;
   score: number;
+}
+
+export interface ParsedResumeData {
+  fileName: string;
+  fileSize?: string;
+  name: string;
+  email: string;
+  phone: string;
+  education: string[];
+  experience: string[];
+  projects: string[];
+  skills: string[];
+  rawText: string;
+  isCustomUpload: boolean;
+}
+
+export interface AtsAnalysisResult {
+  overallScore: number;
+  atsScore: number;
+  keywordMatchScore: number;
+  matchedKeywords: string[];
+  missingKeywords: string[];
+  bonusMatchedKeywords: string[];
+  actionVerbRatio: number;
+  quantifiedImpactCount: number;
+  formattingScore: number;
+  structureScore: number;
+  actionVerbScore: number;
+  projectsScore: number;
+  experienceScore: number;
+  improvementSuggestions: {
+    id: string;
+    type: "critical" | "warning" | "success";
+    title: string;
+    description: string;
+    impact: string;
+  }[];
 }
 
 export interface CopilotKnowledgeItem {

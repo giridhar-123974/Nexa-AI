@@ -57,7 +57,7 @@ export function AiSuggestionsList() {
                   variant={isApplied ? "secondary" : "primary"}
                   className="text-xs px-3 h-7"
                   leftIcon={isApplied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Zap className="w-3.5 h-3.5 text-brand-400" />}
-                  onClick={() => toggleSuggestion(sug.id, parseInt(sug.impactScore) || 10)}
+                  onClick={() => toggleSuggestion(sug.id)}
                 >
                   {isApplied ? "Applied" : "Apply Fix"}
                 </Button>
