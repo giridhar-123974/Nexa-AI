@@ -81,11 +81,18 @@ export function ResumeScoreCard() {
           </div>
         </div>
 
-        {/* Quick Job Switcher Dropdown */}
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <label htmlFor="job-select" className="text-xs text-neutral-400 whitespace-nowrap">
-            Benchmark Against:
-          </label>
+        {/* Quick Job Switcher & Upload Action */}
+        <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+          <Button
+            type="button"
+            size="sm"
+            variant="gradient"
+            onClick={() => fileInputRef.current?.click()}
+            leftIcon={<UploadCloud className="w-3.5 h-3.5" />}
+          >
+            Upload & Scan Resume
+          </Button>
+
           <select
             id="job-select"
             value={activeJob.id}
